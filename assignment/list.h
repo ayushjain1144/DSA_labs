@@ -11,21 +11,33 @@ typedef struct{
 
 }list;
 
+extern int num_list;
+extern list arr_of_list[5];
 list create_list();
 
-void insert(list l, int key);
+list insert(list l, int key);
 
-void delete(list l, int n);
+list delete(list l, int key);
 
-int count(list l);
+int count_list(list l);
 
-void display();
+int count_total(list arr_of_list[]);
+
+void display(list arr_of_list[]);
 
 void display_free();
 
 void defragment();
 
-list initialize_free_list();
+void initialize_free_list();
+
+void push(int address);
+
+int pop();
+
+void insertion_sort(int arr[], int len);
+
+int find_prev_free(int addr);
 
 
 #endif
