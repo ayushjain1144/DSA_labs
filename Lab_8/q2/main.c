@@ -9,13 +9,15 @@ int main(int argc, char* argv[])
 	printf("%s\n",fileName);
 
 	int* studentArray = readData(fileName);
-
+	
 	printArray(studentArray, size);
-
+	
+	
+	/*
 	quickSortKnownKeyRange(studentArray,size, 10, 20);
 
 	printf("\nSorted output is:\n");
 
 	printArray(studentArray, size);
-	
+	*/
 }

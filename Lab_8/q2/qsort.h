@@ -1,3 +1,5 @@
+#ifndef _QSORT
+#define _QSORT
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -22,3 +24,5 @@ KeyStruct extractKeys(int* Ls, int lsSize, int loKey, int hiKey);
 int part2Loc(int* Ls, int lo, int hi, int piv);
 
 void quickSortKnownKeyRange(int * Ls, int size, int loKey, int hiKey);
+
+#endif

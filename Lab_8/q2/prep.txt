@@ -1,0 +1,1029 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+////////////////linkedlist//////////////////////////////
+
+
+#include "linkedlist.h"
+
+void insertFirst(struct linkedList* head, int ele)
+{
+	struct node* link = (struct node*) malloc(sizeof(struct node));
+	
+	link->element = ele;
+	link->next = head->first;
+	head->first = link;
+	head->count++;
+}
+
+struct node* deleteFirst(struct linkedList* head)
+{
+	if(head->count == 0)
+	{
+		printf("List is empty\n");
+		return NULL;
+	
+	}
+	struct node* temp = head->first;
+	head->first = temp->next;
+	head->count--;
+	return temp;
+}
+
+void printList(struct linkedList* head)
+{
+	struct node* link = head->first;
+	printf("%d\n",head->count);
+	
+	while(link != NULL)
+	{
+		
+		printf("%d\n", link->element);
+		link = link->next;
+		
+	
+	}
+
+
+
+}
+int search(struct linkedList* head, int ele)
+{
+	struct node* link = head->first;
+	while(link != NULL)
+	{
+		if(link->element == ele)
+			return 1;
+		link = link->next;
+	}
+	return 0;
+
+
+}
+
+struct node* delete(struct linkedList* head, int ele)
+{
+	struct node* link = head->first;
+	struct node* temp;
+	if(head->count == 0)
+	{
+		printf("List is empty\n");
+		return NULL;
+	
+	}
+	if(link->element == ele)
+	{
+		head->first = link->next;
+		head->count--;
+		return link;
+		
+	
+	}
+	while(link->next != NULL)
+	{
+		if(link ->next -> element == ele)
+		{
+			temp = link->next;
+			link->next = temp->next;
+			head->count--;
+			return temp;
+		
+		}
+		temp = link;
+		link = temp->next;
+	
+	
+	}
+	
+	if(link->element == ele)
+	{
+		temp->next = NULL;
+		head->count--;
+		return link;
+		
+	}
+	
+	printf("Error, no such element\n");
+	return NULL;
+
+
+
+}
+	
+//////////////////////////////////////////////////////////////////////
+
+
+Given below is a sample program that measures the time taken by a program using -
+“sys/time.h”
+#include <sys/time.h>
+// for gettimeofday()
+int main()
+{
+struct timeval t1, t2;
+double elapsedTime;
+// start timer
+gettimeofday(&t1, NULL);
+// do something or call a function
+// ...
+// stop timer
+gettimeofday(&t2, NULL);
+// compute and print the elapsed time in millisec
+elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;
+elapsedTime += (t2.tv_usec - t1.tv_usec) / 1000.0;
+printf("Total time is" + elapsedTime + "ms.\n";
+// sec to ms
+// us to ms
+return 0;
+}
+To measure time using gprof, you don’t need to add any instrumentation in the file like we
+did before. Rather we should compile our files and link them using the flag “ -pg ”, execute
+your program and then generate the profiling output. For example you need to do the
+following for profiling a program writing in “file1.c” :gcc –pg file1.c –o test // compiles file1.c and generates an executable with
+name test
+./test // execute the program
+gprof test gmon.out > prof_output
+// creates a file prof_output which contains
+the time taken for execution of each
+functio
+
+
+////////////////////////////////////////////////////////////////////////////
+
+//////////////////////queue/////////////////////////////////////
+
+#include "que.h"
+#include<stdlib.h>
+
+
+//bool isEmptyQ(Queue q);
+
+Queue* newQ()
+{
+	Queue* q;
+	q = (Queue*)malloc(sizeof(Queue));
+	q->first = NULL;
+	q->last = NULL;
+	return q;
+
+
+}
+
+
+int isEmptyQ(Queue* q)
+{
+	if(q->first == NULL)
+		return 1;
+	else
+		return 0;	
+
+
+}
+
+void delQ(Queue* q)
+{
+	if(isEmptyQ(q))
+	{
+		printf("Empty queue\n");
+		return;
+	}
+	struct node* temp = q->first;
+	q->first = temp->next;
+	free(temp);
+
+}
+
+int front(Queue* q)
+{
+	if(isEmptyQ(q))
+	{
+		printf("Queue is empty\n");
+		return -1;
+	}
+	return (q->first)->element;
+
+}
+
+void addQ(Queue* q, int ele)
+{
+	struct node* link = (struct node*)malloc(sizeof(struct node));
+	link->element = ele;
+	
+	if(isEmptyQ(q))
+	{
+		link->next = NULL;
+		q->first = link;
+		q->last = link;
+		return;
+	
+	}
+	
+	(q->last)->next = link;
+	q->last = link;
+
+
+}
+
+int lengthQ(Queue* q)
+{
+	struct node* link = q->first;
+	int count = 0;
+	while(link != NULL)
+	{
+		count++;
+		link = link->next;
+	
+	}
+	return count;
+	
+}
+/////////////////////////////////////////////////////////////////////////////
+
+int testCyclic(linkedlist* l)
+{
+	node* hare;
+	node* tort;
+	
+	tort = l->head;
+	if(tort == NULL || tort->next == NULL)
+		return 0;
+	
+	hare = tort->next;
+	
+	while(hare != tort)
+	{
+		if(hare -> next == NULL || (hare->next)->next == NULL)
+			return 0;
+		hare = 	(hare->next)->next;
+		if(tort -> next == NULL)
+			return 0;
+		tort = tort -> next;	
+	
+	}	
+	
+	return 1;
+}
+
+//////////////////////////////////////////////////////////////////
+
+
+int testCyclic(linkedlist* l)
+{
+	node* start = l->head;
+	node* curr = start;
+	node* prev = NULL;
+	node* ahead;
+	while(curr != NULL)
+	{
+		ahead = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = ahead;
+		
+		if(curr == start)
+			return 1;
+		
+	}
+	
+	return 0;
+	
+}
+
+
+/////////////////////////////////////////////////////////////////
+
+#include<stdio.h>
+#include "bank.h"
+
+void insertInOrder(bank* arr, int num, bank b)
+{
+	arr[num] = b;
+
+	for(int i = 0; i < num; i++)
+	{
+		if(arr[i].card_num > b.card_num)
+		{
+			swap(&arr[i], &arr[num]);
+		}
+	
+	}
+	
+}
+
+void swap(bank* a, bank* b)
+{  
+	bank temp = *a;
+	*a = *b;
+	*b = temp;
+	
+	
+}
+void insertion_sort(bank arr[], int size)
+{
+	int a;
+	p1 = &a;
+	if(size > 1)
+	{
+		insertion_sort(arr, size-1);
+		insertInOrder(arr, size - 1 , arr[size-1]);
+	}
+	int b;
+	p2 = &b;
+	
+
+}
+
+////////////////////////////////////////////////////////////////////
+
+makefile
+
+
+compile: readRecords.c insertionSort.c main.c bank.h
+	gcc -c readRecords.c
+	gcc -c insertionSort.c
+	gcc -o sb readRecords.o insertionSort.o main.c
+
+run: sb 10 100 1000 10000 100000
+	./sb 10	
+	
+test: compile dist1.txt dist2.txt dist3.txt dist4.txt
+	./sb dist1.txt
+	./sb dist2.txt
+	./sb dist3.txt
+	./sb dist4.txt
+	
+	
+	
+Write a Makefile with targets run, and compile for the program in Exercise 2:
+ compile: Compile files readRecords.c, insertionSort.c, and
+measureTimeAndSpace.c (with the appropriate header files) separately.
+Compile the object files (i.e. .o files) with the main .c file to produce an
+executable.
+run: Run the executable produced by compile once with the input file.
+Introduction to Makefiles:
+Makefile is a linux utility to easily compile and link large programs, typically containing
+multiple source and header files. Whenever “make” command is run, it searches for a file
+named “makefile” in the current directory and executes it.
+A makefile is a collection of rules, where each rule consists of following:
+• target: keyword that user can pass as argument to “make”.
+• dependencies (prerequisites): all the files on which this target depends upon. If they
+are target themselves and have been modified since last execution then their
+corresponding rule is first executed
+• commands (recipes): all the commands which should be executed if all dependencies
+of current target are met (i.e. unchanged from last execution)
+Syntax: for writing a rule (there should be a tab (not spaces) before each command):
+target : dependency 1
+dependency 2
+dependency n
+command 1
+command 2
+command m
+Example:
+Assume that there are two modules (with a source and header file each) and a driver file. In
+order to create a makefile with a single target “compileAll”, so that it can be executed with
+“make compileAll” command on terminal, a makefile can be created as follows:
+***********************************************************
+compileAll : module1.o module2.o driver.o
+gcc module1.o module2.o driver.o -o myprogram
+module1.o : module1.c module1.h
+gcc -c module1.c
+module2.o : module2.c module2.h
+gcc -c module2.c
+driver.o : driver.c module1.h module2.h
+gcc -c driver.c
+
+
+////////////////////////////////////////////////////////////////////////
+
+void merge(student ls1[], int sz1, student ls2[], int sz2, student ls[])
+{
+	
+	int i = 0;
+	int j = 0;
+	int k = 0;
+	printf("Inside merge\n");
+	while(i != sz1 && j != sz2)
+	{
+		if(ls1[i].number <= ls2[j].number)
+		{
+			ls[k] = ls1[i];
+			i++;
+			k++;
+		}
+		
+		else
+		{
+			ls[k] = ls2[j];
+			j++;
+			k++;
+		}
+	}
+	
+	
+	if(i == sz1 && j != sz2)
+	{
+		while(j != sz2)
+		{
+			ls[k] = ls2[j];
+			j++;
+			k++;
+		}
+		
+	
+	}
+	
+	if(i != sz1 && j == sz2)
+	{
+		while(i != sz1)
+		{
+		ls[k] = ls1[i];
+		i++;
+		k++;
+		
+		}
+	
+	}
+	
+
+}
+
+
+student* merge_sort(student ls[], int low, int high)
+{
+	
+	int sz = high - low + 1;
+	int key = 1;
+
+	while(key != sz)
+	{
+		int num = sz/key;
+		student arr[2 * key];
+		student ls1[key];
+		student ls2[key];
+		for(int i = 0; i < num; i+=2)
+		{
+			for(int n = i * key, j = 0; j < key ; j++)
+			{
+				ls1[j] = ls[n + j];
+			}
+			for(int n = (i + 1) * key, j = 0; j < key ; j++)
+			{
+				ls2[j] = ls[n + j];
+			}
+			merge(ls1, key, ls2, key, arr);
+			for(int k = 0; k < 2 * key; k++)
+			{
+				ls[i * key + k] = arr[k];
+			}
+		
+		}
+		
+		key *= 2;
+	
+	
+	}
+
+	return ls;
+}
+
+
+#include<stdio.h>
+#include<stdlib.h>
+
+#include "merge.h"
+int count = 0;
+student* merge_sort(student ls[], int low, int high)
+{
+
+//	int left = 0............sz/2;
+//	int right = sz/2 + 1 ....... sz
+	student* ls_new = (student *)malloc(sizeof(student) * (high - low + 1));
+	
+	if(high == low)
+	{
+		ls_new[0] = ls[low];
+		count++;
+		printf("name: %s, number: %lf %d\n", ls_new[0].name, ls_new[0].number, count);
+		return ls_new;
+	}
+	student* ls1 = merge_sort(ls, low, (low + high)/2);
+	student* ls2 = merge_sort(ls, ((low + high)/2) + 1, high);
+	
+	merge(ls1, ((high - low + 1)/2), ls2, ((high-low + 1)/2), ls_new);
+	for(int i = 0; i < high - low + 1; i++)
+	{
+				printf("name: %s, number: %lf\n", ls_new[i].name, ls_new[i].number);
+		ls[i + low] = ls_new[i];
+	
+	} 
+	return ls_new;
+
+
+}
+
+
+//////////////////////////////////////////////////////////////////////
+
+quicksort
+
+
+#include<stdio.h>
+
+void swap(int* a, int* b);
+int partition(int arr[], int p, int q);
+void quicksort(int A[], int p, int q);
+
+int main(void)
+{
+	int arr[7] = {-1, 9, 1, 7, 11, 5, 18};
+	quicksort(arr, 0, 6);
+	
+	for(int i = 0; i < 7; i++)
+		printf("%d ", arr[i]);
+
+}
+
+
+void quicksort(int A[], int p, int q)
+{
+	if(p < q)
+	{
+		int index = partition(A, p, q);
+		quicksort(A, p, index - 1);
+		quicksort(A, index + 1, q);
+	}
+	
+	return;
+}
+
+// assuming pivot to be the last element
+int partition(int arr[], int p, int q)
+{
+	int pivot = arr[q];
+	int i = p;
+	int j = q - 1;
+	
+	while(i <= j)
+	{
+		if(arr[i] <= pivot)
+			i++;
+		
+		
+		else if(arr[j] > pivot)
+			j--;
+			
+		else
+			swap(&arr[i], &arr[j]);
+		
+		
+	
+	}
+	
+	swap(&arr[i], &arr[q]);
+	
+	return i;
+}
+
+void swap(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+
+} 
+
+
+#include<stdio.h>
+#include "stack.h"
+void swap(int* a, int* b);
+int partition(int arr[], int p, int q);
+void quicksort(int A[], int p, int q);
+
+int main(void)
+{
+	int arr[7] = {7, 6, 5, 4, 3, 2, 1};
+	quicksort(arr, 0, 6);
+	
+	for(int i = 0; i < 7; i++)
+		printf("%d ", arr[i]);
+
+}
+
+int partition(int arr[], int p, int q)
+{
+	int pivot = arr[q];
+	int i = p;
+	int j = q - 1;
+	
+	while(i <= j)
+	{
+		if(arr[i] <= pivot)
+			i++;
+		
+		
+		else if(arr[j] > pivot)
+			j--;
+			
+		else
+			swap(&arr[i], &arr[j]);
+		
+		
+	
+	}
+	
+	swap(&arr[i], &arr[q]);
+	
+	return i;
+}
+
+
+void quicksort(int A[], int p, int q)
+{
+	stack* s = createStack();
+	push(s, p);
+	push(s, q);
+	
+	while(!isEmpty(s))
+	{	
+		int right = pop(s);
+		int left = pop(s);
+		int index = partition(A, left, right);
+		
+		
+		if(left < index - 1)
+		{
+			push(s, left);
+		
+			push(s, index - 1);
+		}
+		if(right > index + 1)
+		{	
+			push(s, index + 1);
+			push(s, right);
+		}
+	}
+}
+void swap(int* a, int* b)
+{
+	int temp = *a;
+	*a = *b;
+	*b = temp;
+
+} 
+
+
+
+//////////////////////////////////////////////////////////////////////////////
+
+
+stack
+
+#include<stdio.h>
+#include<stdlib.h>
+#include<limits.h>
+
+#include "stack.h"
+
+stack* createStack()
+{
+	stack* s = (stack*)malloc(sizeof(stack));
+	s->arr = (int*)malloc(sizeof(int)*100);
+	s->capacity = 100;
+	s->top = 0;
+	return s;
+
+}
+
+int isEmpty(stack* s)
+{
+	if(s->top == 0)
+		return 1;
+	return 0;
+}
+
+int isFull(stack* s)
+{
+	if(s->top == s->capacity)
+		return 1;
+	return 0;	
+
+}
+void push(stack* s, int ele)
+{
+	if(isFull(s))
+		s->arr = realloc(s, s->capacity*2);
+		
+	s->arr[s->top] = ele;
+	s->top+=1;
+
+}
+int peek(stack* s)
+{	
+	if(!isEmpty(s))
+		return s->arr[s->top-1];
+	return INT_MIN;	
+}
+int pop(stack* s)
+{
+	if(!isEmpty(s))
+	{
+		s->top--;
+		return s->arr[s->top];
+	}
+	return INT_MIN;
+
+}
+
+
+
+////////////////////////////////////////////////////////////////////////////
+
+
+#include "List.h"
+#include<stdlib.h>
+#include<time.h>
+//int globalCounter = 0;
+List createList(Student studArray, int arraySize)
+{
+	
+	List l;
+	l = (List)myalloc(sizeof(struct list));
+	l->count = 0;
+	l->first = NULL;
+	l->last = NULL;	
+	
+	if(arraySize == 0)
+		return l;
+	Node temp;
+	temp = (Node)myalloc(sizeof(struct node));
+	temp->record = (Student)myalloc(sizeof(struct student));
+	*(temp->record) = studArray[0];
+	temp->next = NULL;
+	
+	l->first = temp;
+	l->last = temp;
+	l->count++;
+	for(int i = 1; i < arraySize; i++)
+	{
+		Node temp1 = (Node)myalloc(sizeof(struct node));
+		temp1->record = (Student)myalloc(sizeof(struct student));
+		*(temp1->record) = studArray[i];
+		temp1->next = l->first;
+		
+		l->count++;
+		l->first = temp1;
+		
+	}
+
+	return l;
+		
+
+}
+
+void my_printList(List l)
+{
+	Node temp = l->first;
+	
+	while(temp!=NULL)
+	{
+		printf("name : %s, marks: %f\n", (temp->record)->name, (temp->record)->marks);
+		temp = temp->next;
+	
+	}
+
+}
+
+
+void insertInOrder(List list, Node newNode)
+{
+	list->count+=1;
+	
+	Node temp = list->first;
+	
+	if(list->first == NULL)
+	{
+		newNode->next = NULL;
+		list->first = newNode;
+		list->last = newNode;
+		return;
+	}
+	
+	//insert at start
+	if(((list->first)->record)->marks >= (newNode->record)->marks)
+	{
+		newNode->next = list->first;
+		list->first = newNode;
+		printf("here\n");
+		return;
+	}
+	
+	if(((list->last)->record)->marks <= (newNode->record)->marks)
+	{
+		newNode->next = NULL;
+		list->last->next = newNode;
+		list->last = newNode;
+		return;
+	}
+	
+	while(temp->next != NULL)
+	{
+		if(temp->next->record->marks > newNode->record->marks)
+		{
+			newNode->next = temp->next;
+			temp->next = newNode;
+			return;
+		}
+		temp = temp->next;
+	}
+
+}
+
+List insertionSort(List list)
+{
+	
+	if(list->first == NULL)
+		return list;
+	List newlist;
+	newlist = (List)myalloc(sizeof(struct list));
+	newlist->count = 0;
+	newlist->first = NULL;
+	newlist->last = NULL;
+	
+	
+	Node ptr = list->first;
+	while(ptr!= NULL)
+	{
+		Node temp = (Node)myalloc(sizeof(struct node));
+		temp->record = ptr->record;
+		temp->next = NULL;
+		insertInOrder(newlist, temp);
+		ptr = ptr->next;
+	
+	}
+	
+	return newlist;
+	
+
+}
+void* myalloc(int size)
+{
+	globalCounter += size;
+	
+	int* ptr = (int*)malloc(size + sizeof(int));
+	*ptr = size;
+	return (((void*)ptr) + 4);
+
+}
+
+void myfree(void* ptr)
+{
+	int size = *(((int*)ptr) - 4);
+	globalCounter -= size;
+	
+	free(ptr);
+	return;
+}
+double measureSortingTime(List list)
+{
+	struct timeval t1, t2;
+	double elapsedTime;
+	
+	gettimeofday(&t1, NULL);
+	List newlist = insertionSort(list);	
+	gettimeofday(&t2, NULL);
+	
+	elapsedTime = (t2.tv_sec - t1.tv_sec) * 1000.0;
+	elapsedTime = (t2.tv_usec - t1.tv_usec) / 1000.0;
+	return elapsedTime;
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+
+
+%*c would exclude one character. Remember, ‘/n’ and ‘/t’ are single characters.
+
+%*d would exclude one integer.
+
+%*f would exclude one float.
+
+%*s would exclude one word.
+
+
+%5d would take an integer of at most 5 digits.
+
+%5f would take a float type number of at most 5 digits or 4 digits and one “ . ” as input.
+
+%5s would take a string of at most 5 non white-space characters as input.
+
+
+//////////////////////////////////////////////////////////////////////
+
+run or r –> executes the program from start to end.
+break or b –> sets breakpoint on a particular line.
+disable -> disable a breakpoint.
+enable –> enable a disabled breakpoint.
+next or n -> executes next line of code, but don’t dive into functions.
+step –> go to next instruction, diving into the function.
+list or l –> displays the code.
+print or p –> used to display the stored value.
+quit or q –> exits out of gdb.
+clear –> to clear all breakpoints.
+continue –> continue normal execution.
+
+////////////////////////////////////////////////////////////////////////
+
+
+///////////////bucket sort//////////////////////////////////////
+
+
+bucketSort(arr[], n)
+1) Create n empty buckets (Or lists).
+2) Do following for every array element arr[i].
+.......a) Insert arr[i] into bucket[n*array[i]]
+3) Sort individual buckets using insertion sort.
+4) Concatenate all sorted buckets.
+
+
+void bucketSort(float arr[], int n) 
+{ 
+    // 1) Create n empty buckets 
+    vector<float> b[n]; 
+     
+    // 2) Put array elements in different buckets 
+    for (int i=0; i<n; i++) 
+    { 
+       int bi = n*arr[i]; // Index in bucket 
+       b[bi].push_back(arr[i]); 
+    } 
+  
+    // 3) Sort individual buckets 
+    for (int i=0; i<n; i++) 
+       sort(b[i].begin(), b[i].end()); 
+  
+    // 4) Concatenate all buckets into arr[] 
+    int index = 0; 
+    for (int i = 0; i < n; i++) 
+        for (int j = 0; j < b[i].size(); j++) 
+          arr[index++] = b[i][j]; 
+} 
+
+
+
+/////////////////////////////radix sort////////////////////
+
+QuickSort, MergeSort, HeapSort are comparison based sorting algorithms.
+CountSort is not comparison based algorithm. It has the complexity of , where is the maximum element of the input array.
+So, if is ,CountSort becomes linear sorting, which is better than comparison based sorting algorithms that have time complexity. The idea is to extend the CountSort algorithm to get a better time complexity when k goes . Here comes the idea of Radix Sort.
+
+Algorithm:
+For each digit where varies from the least significant digit to the most significant digit of a number
+    Sort input array using countsort algorithm according to ith digit.
+
+We used count sort because it is a stable sort.
+
+Example: Assume the input array is:
+10,21,17,34,44,11,654,123
+Based on the algorithm, we will sort the input array according to the one's digit (least significant digit).
+0: 10
+1: 21 11
+2:
+3: 123
+4: 34 44 654
+5:
+6:
+7: 17
+8:
+9:
+
+So, the array becomes 10,21,11,123,24,44,654,17
+Now, we'll sort according to the ten's digit:
+0:
+1: 10 11 17
+2: 21 123
+3: 34
+4: 44
+5: 654
+6:
+7:
+8:
+9:
+
+Now, the array becomes : 10,11,17,21,123,34,44,654
+Finally , we sort according to the hundred's digit (most significant digit):
+0: 010 011 017 021 034 044
+1: 123
+2:
+3:
+4:
+5:
+6: 654
+7:
+8:
+9:
+
+The array becomes : 10,11,17,21,34,44,123,654 which is sorted. This is how our algorithm works
+
+///////////////////////////////////////////////////////////////		
+	
+	
